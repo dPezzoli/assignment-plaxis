@@ -7,3 +7,33 @@ a handful parametrization term for such polygons). However, regular polygons
 may be advantageously defined using their center point. Shapes have the ability
 to detect intersection with other shapes.
 """
+
+import math
+from abc import ABCMeta, abstractmethod, abstractproperty
+
+
+class Shape2D:
+    """
+    Abstract class defining a generic two-dimensional shape
+    """
+
+    __metaclass__ = ABCMeta
+
+    @abstractproperty
+    def area(self):
+        pass
+
+    @abstractmethod
+    def get_min_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the shape bounding box minimum
+                 point (min 'x' and min 'y')
+        """
+
+    @abstractmethod
+    def get_max_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the shape bounding box maximum
+                 point (min 'x' and min 'y')
+        """
+

@@ -37,3 +37,33 @@ class Shape2D:
                  point (min 'x' and min 'y')
         """
 
+
+class NonPolygon(Shape2D):
+    """
+    Class defining a non-polygonal 2d shape
+    """
+
+    __metaclass__ = ABCMeta
+
+    @abstractproperty
+    def area(self):
+        pass
+
+    @abstractproperty
+    def center(self):
+        pass
+
+    @abstractmethod
+    def get_min_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the non-polygon shape bounding box
+                 minimum point (min 'x' and min 'y')
+        """
+
+    @abstractmethod
+    def get_max_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the non-polygon shape bounding box
+                 maximum point (min 'x' and min 'y')
+        """
+

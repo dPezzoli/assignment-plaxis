@@ -196,3 +196,34 @@ class OverlappingShapesDetector:
                         __does_the_circle_overlap_the_rectangle(first_shape,
                                                                 second_shape))
 
+    @staticmethod
+    def __do_these_two_rectangles_overlap(first_rectangle, second_rectangle):
+        """
+        :return: True if the two given rectangles overlap
+        """
+        max_length_width = (first_rectangle.half_width +
+                            second_rectangle.half_width)
+        max_length_height = (first_rectangle.half_height +
+                             second_rectangle.half_height)
+
+        if (abs(first_rectangle.center[0] - second_rectangle.center[0]) <
+                max_length_width and
+                abs(first_rectangle.center[1] - second_rectangle.center[1]) <
+                max_length_height):
+            return True
+
+        return False
+
+    @staticmethod
+    def __do_these_two_circles_overlap(first_circle, second_circle):
+        """
+        :return: True if the two given circles overlap
+        """
+        if (sqr(first_circle.center[0] - second_circle.center[0]) +
+                sqr(first_circle.center[1] - second_circle.center[1]) <
+                sqr(first_circle.radius + second_circle.radius)):
+            return True
+
+        return False
+
+

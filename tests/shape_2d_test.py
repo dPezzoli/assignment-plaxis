@@ -50,6 +50,38 @@ class TestCircle(unittest.TestCase):
         self.assertAlmostEquals(points[9][1], 4)
 
 
+class TestRectangle(unittest.TestCase):
+    """
+    Tests for the class Rectangle
+    """
+
+    def setUp(self):
+        """
+        Define a fixture for the tests
+        """
+        self.rectangle_a = shapes_2d.Rectangle((0, 0), 3.16, 1.2)
+        self.rectangle_b = shapes_2d.Rectangle((3, 0), 1.0, 4.0)
+
+    def test_area(self):
+        area_a = self.rectangle_a.area
+        self.assertEqual(area_a, 15.168)
+
+        area_b = self.rectangle_b.area
+        self.assertEqual(area_b, 16)
+
+    def test_center(self):
+        center_b = self.rectangle_b.center
+        self.assertEqual(center_b, (3, 0))
+
+    def test_get_min_coordinates(self):
+        min_b = self.rectangle_a.get_min_coordinates()
+        self.assertEqual(min_b, (-3.16, -1.2))
+
+    def test_get_max_coordinates(self):
+        max_b = self.rectangle_a.get_max_coordinates()
+        self.assertEqual(max_b, (3.16, 1.2))
+
+
 if __name__ == "__main__":
     unittest.main()
 

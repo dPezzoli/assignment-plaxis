@@ -39,3 +39,10 @@ class Car:
                 max_coordinates[1] = shape_max_coordinates[1]
 
         return [min_coordinates, max_coordinates]
+
+    def collides(self, car):
+        """
+        :param car: a second car against which the collision state is
+                    determined
+        :return: True if self collides with the given car; False otherwise
+        """

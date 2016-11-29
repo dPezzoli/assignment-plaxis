@@ -15,3 +15,27 @@ class Car:
     def __init__(self, name, shapes):
         self.name = name
         self._shapes = shapes
+
+    def compute_bounding_box(self):
+        """
+        :return: The min and max coordinates points of this car axis aligned
+                 bounding box
+        """
+        min_coordinates = [math.inf, math.inf]
+        max_coordinates = [-math.inf, -math.inf]
+
+        for shape in self._shapes:
+
+            shape_min_coordinates = shape.get_min_coordinates()
+            if shape_min_coordinates[0] < min_coordinates[0]:
+                min_coordinates[0] = shape_min_coordinates[0]
+            if shape_min_coordinates[1] < min_coordinates[1]:
+                min_coordinates[1] = shape_min_coordinates[1]
+
+            shape_max_coordinates = shape.get_max_coordinates()
+            if shape_max_coordinates[0] > max_coordinates[0]:
+                max_coordinates[0] = shape_max_coordinates[0]
+            if shape_max_coordinates[1] > max_coordinates[1]:
+                max_coordinates[1] = shape_max_coordinates[1]
+
+        return [min_coordinates, max_coordinates]

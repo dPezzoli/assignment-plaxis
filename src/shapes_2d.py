@@ -135,6 +135,29 @@ class Circle(NonPolygon):
         """
         return [self._center[0] + self._radius, self._center[1] + self._radius]
 
+    def evenly_distribute_points_along_circumference(self, number_of_points):
+        """
+        :param number_of_points: The number of points to be distributed along
+               the circumference. Possible values are the multiples of four;
+               this ensures the circle extremes are included
+        :return: A list of points along the circumference
+        """
+        points = []
+
+        if number_of_points % 4 != 0:
+            raise ValueError("The number of points must be a multiple of four")
+
+        angular_step_size = math.pi / number_of_points
+
+        for i in range(number_of_points):
+            points.append((self.center[0] +
+                           self._radius * math.sin(angular_step_size * i),
+                           (self.center[1] +
+                            self._radius * math.cos(angular_step_size * i))
+                           ))
+
+        return points
+
 
 class Rectangle(Polygon):
     """

@@ -149,3 +149,20 @@ class Rectangle(Polygon):
     def area(self):
         return self.half_height * self.half_width * 4
 
+    def get_min_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the rectangle bounding box minimum
+                 point (min 'x' and min 'y')
+        """
+        return (self.center[0] - self.half_width,
+                self.center[1] - self.half_height)
+
+    def get_max_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the rectangle bounding box maximum
+                 point (min 'x' and min 'y')
+        """
+        return (self.center[0] + self.half_width,
+                self.center[1] + self.half_height)
+
+

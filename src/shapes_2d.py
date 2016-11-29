@@ -145,3 +145,7 @@ class Rectangle(Polygon):
         self.half_width = half_width
         self.half_height = half_height
 
+    @property
+    def area(self):
+        return self.half_height * self.half_width * 4
+

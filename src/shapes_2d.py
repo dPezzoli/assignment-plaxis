@@ -135,3 +135,13 @@ class Circle(NonPolygon):
         return [self._center[0] + self._radius, self._center[1] + self._radius]
 
 
+class Rectangle(Polygon):
+    """
+    Class defining a Rectangle
+    """
+
+    def __init__(self, center, half_width, half_height):
+        self.center = center
+        self.half_width = half_width
+        self.half_height = half_height
+

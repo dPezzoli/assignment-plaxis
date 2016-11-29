@@ -93,3 +93,45 @@ class Polygon(Shape2D):
         :return: 2D-Cartesian coordinates of the polygon bounding box maximum
                  point (min 'x' and min 'y')
         """
+
+
+class Circle(NonPolygon):
+    """
+    Class defining a circle
+    """
+
+    def __init__(self, center, radius):
+        """
+        :param center: the center of the circle
+        :param radius: the radius of the circle
+        """
+        self._center = center
+        self._radius = radius
+
+    @property
+    def area(self):
+        return math.pi * self._radius * self._radius
+
+    @property
+    def center(self):
+        return self._center
+
+    @property
+    def radius(self):
+        return self._radius
+
+    def get_min_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the circle bounding box minimum
+                 point (min 'x' and min 'y')
+        """
+        return [self._center[0] - self._radius, self._center[1] - self._radius]
+
+    def get_max_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the circle bounding box maximum
+                 point (min 'x' and min 'y')
+        """
+        return [self._center[0] + self._radius, self._center[1] + self._radius]
+
+

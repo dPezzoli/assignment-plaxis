@@ -107,3 +107,14 @@ class Circle(NonPolygon):
         """
         self._center = center
         self._radius = radius
+
+    @property
+    def area(self):
+        return math.pi * self._radius * self._radius
+
+    @property
+    def center(self):
+        return self._center
+
+
+

@@ -167,3 +167,32 @@ class Rectangle(Polygon):
                 self.center[1] + self.half_height)
 
 
+class OverlappingShapesDetector:
+    """
+    Class providing utilities to determine whether 2d-shapes overlap each other
+    """
+
+    @staticmethod
+    def do_these_two_shapes_overlap(first_shape, second_shape):
+        """
+        :return: True if the two given shapes overlap
+        """
+        if type(first_shape) == Rectangle:
+            if type(second_shape) == Rectangle:
+                return (OverlappingShapesDetector.
+                        __do_these_two_rectangles_overlap(first_shape,
+                                                          second_shape))
+            if type(second_shape) == Circle:
+                return (OverlappingShapesDetector.
+                        __does_the_circle_overlap_the_rectangle(second_shape,
+                                                                first_shape))
+        elif type(first_shape) == Circle:
+            if type(second_shape) == Circle:
+                return (OverlappingShapesDetector.
+                        __do_these_two_circles_overlap(first_shape,
+                                                       second_shape))
+            if type(second_shape) == Rectangle:
+                return (OverlappingShapesDetector.
+                        __does_the_circle_overlap_the_rectangle(first_shape,
+                                                                second_shape))
+

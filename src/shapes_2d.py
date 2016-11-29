@@ -116,5 +116,9 @@ class Circle(NonPolygon):
     def center(self):
         return self._center
 
+    @property
+    def radius(self):
+        return self._radius
+
 
 

@@ -249,4 +249,36 @@ class OverlappingShapesDetector:
 
         return False
 
+    @staticmethod
+    def __does_the_circle_overlap_the_rectangle(circle, rectangle):
+        """
+        :return: True if the given circle overlaps the given rectangle
+        """
+        # Step 1: point-in-circle test for a set of points composed by the
+        #         rectangle corners and the rectangle center
+        corners = [(rectangle.center[0] - rectangle.half_width,
+                    rectangle.center[1] - rectangle.half_height),
+                   (rectangle.center[0] - rectangle.half_width,
+                    rectangle.center[1] + rectangle.half_height),
+                   (rectangle.center[0] + rectangle.half_width,
+                    rectangle.center[1] - rectangle.half_height),
+                   (rectangle.center[0] + rectangle.half_width,
+                    rectangle.center[1] + rectangle.half_height),
+                   (rectangle.center[0], rectangle.center[1])]
+        for corner_x, corner_y in corners:
+            if sqr(corner_x - circle.center[0]) + \
+                    sqr(corner_y - circle.center[1]) < sqr(circle.radius):
+                return True
+
+        # Step 2: point-in-rectangle test using a set of points evenly
+        #         distributed along the circumference (we use 360 points)
+        points = circle.evenly_distribute_points_along_circumference(360)
+        for point_x, point_y in points:
+            if (rectangle.center[0] - rectangle.half_width < point_x <
+                rectangle.center[0] + rectangle.half_width and
+                rectangle.center[1] - rectangle.half_height < point_y <
+                    rectangle.center[1] + rectangle.half_height):
+                return True
+
+        return False
 

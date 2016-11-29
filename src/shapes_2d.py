@@ -147,7 +147,7 @@ class Circle(NonPolygon):
         if number_of_points % 4 != 0:
             raise ValueError("The number of points must be a multiple of four")
 
-        angular_step_size = math.pi / number_of_points
+        angular_step_size = 2 * math.pi / number_of_points
 
         for i in range(number_of_points):
             points.append((self.center[0] +

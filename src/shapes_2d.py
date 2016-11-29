@@ -135,3 +135,34 @@ class Circle(NonPolygon):
         return [self._center[0] + self._radius, self._center[1] + self._radius]
 
 
+class Rectangle(Polygon):
+    """
+    Class defining a Rectangle
+    """
+
+    def __init__(self, center, half_width, half_height):
+        self.center = center
+        self.half_width = half_width
+        self.half_height = half_height
+
+    @property
+    def area(self):
+        return self.half_height * self.half_width * 4
+
+    def get_min_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the rectangle bounding box minimum
+                 point (min 'x' and min 'y')
+        """
+        return (self.center[0] - self.half_width,
+                self.center[1] - self.half_height)
+
+    def get_max_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the rectangle bounding box maximum
+                 point (min 'x' and min 'y')
+        """
+        return (self.center[0] + self.half_width,
+                self.center[1] + self.half_height)
+
+

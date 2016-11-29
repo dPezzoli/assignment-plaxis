@@ -120,5 +120,18 @@ class Circle(NonPolygon):
     def radius(self):
         return self._radius
 
+    def get_min_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the circle bounding box minimum
+                 point (min 'x' and min 'y')
+        """
+        return [self._center[0] - self._radius, self._center[1] - self._radius]
+
+    def get_max_coordinates(self):
+        """
+        :return: 2D-Cartesian coordinates of the circle bounding box maximum
+                 point (min 'x' and min 'y')
+        """
+        return [self._center[0] + self._radius, self._center[1] + self._radius]
 
 

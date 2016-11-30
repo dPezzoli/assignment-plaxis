@@ -110,6 +110,10 @@ class Circle(NonPolygon):
         :param center: the center of the circle
         :param radius: the radius of the circle
         """
+        # Check radius positiveness
+        if radius <= 0:
+            raise ValueError("Please provide a positive radius value")
+        # Initialize attributes
         self._center = center
         self._radius = radius
 
@@ -169,9 +173,15 @@ class Rectangle(Polygon):
     """
 
     def __init__(self, center, half_width, half_height):
-        self.center = center
+        # Check rectangle dimensions positiveness
+        if half_height <= 0:
+            raise ValueError("Please provide a positive half_height value")
+        elif half_width <= 0:
+            raise ValueError("Please provide a positive half_width value")
+        # Initialize attributes
         self.half_width = half_width
         self.half_height = half_height
+        self.center = center
 
     @property
     def area(self):

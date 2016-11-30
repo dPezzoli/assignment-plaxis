@@ -13,6 +13,10 @@ import math
 from abc import ABCMeta, abstractmethod, abstractproperty
 
 
+def sqr(x):
+    return x * x
+
+
 class Shape2D:
     """
     Abstract class defining a generic two-dimensional shape
@@ -106,6 +110,10 @@ class Circle(NonPolygon):
         :param center: the center of the circle
         :param radius: the radius of the circle
         """
+        # Check radius positiveness
+        if radius <= 0:
+            raise ValueError("Please provide a positive radius value")
+        # Initialize attributes
         self._center = center
         self._radius = radius
 
@@ -126,14 +134,14 @@ class Circle(NonPolygon):
         :return: 2D-Cartesian coordinates of the circle bounding box minimum
                  point (min 'x' and min 'y')
         """
-        return [self._center[0] - self._radius, self._center[1] - self._radius]
+        return self._center[0] - self._radius, self._center[1] - self._radius
 
     def get_max_coordinates(self):
         """
         :return: 2D-Cartesian coordinates of the circle bounding box maximum
                  point (min 'x' and min 'y')
         """
-        return [self._center[0] + self._radius, self._center[1] + self._radius]
+        return self._center[0] + self._radius, self._center[1] + self._radius
 
     def evenly_distribute_points_along_circumference(self, number_of_points):
         """
@@ -147,7 +155,7 @@ class Circle(NonPolygon):
         if number_of_points % 4 != 0:
             raise ValueError("The number of points must be a multiple of four")
 
-        angular_step_size = math.pi / number_of_points
+        angular_step_size = 2 * math.pi / number_of_points
 
         for i in range(number_of_points):
             points.append((self.center[0] +
@@ -165,9 +173,15 @@ class Rectangle(Polygon):
     """
 
     def __init__(self, center, half_width, half_height):
-        self.center = center
+        # Check rectangle dimensions positiveness
+        if half_height <= 0:
+            raise ValueError("Please provide a positive half_height value")
+        elif half_width <= 0:
+            raise ValueError("Please provide a positive half_width value")
+        # Initialize attributes
         self.half_width = half_width
         self.half_height = half_height
+        self.center = center
 
     @property
     def area(self):

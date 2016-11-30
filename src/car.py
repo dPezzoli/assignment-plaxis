@@ -3,7 +3,7 @@ This module provides an implementation of a car class.
 """
 
 import math
-import shapes_2d
+from src import shapes_2d
 
 
 class Car:
@@ -15,6 +15,10 @@ class Car:
     def __init__(self, name, shapes):
         self.name = name
         self._shapes = shapes
+
+    @property
+    def shapes(self):
+        return self._shapes
 
     def compute_bounding_box(self):
         """
@@ -38,7 +42,7 @@ class Car:
             if shape_max_coordinates[1] > max_coordinates[1]:
                 max_coordinates[1] = shape_max_coordinates[1]
 
-        return [min_coordinates, max_coordinates]
+        return min_coordinates, max_coordinates
 
     def collides(self, car):
         """
@@ -61,7 +65,6 @@ class Car:
 
         if shapes_2d.OverlappingShapesDetector.do_these_two_shapes_overlap(
                 box, other_box):
-            print("Bounding boxes do intersect")
             # 2) Check all the underlying shapes.
             for i in range(len(self._shapes)):
                 for j in range(len(car.shapes)):

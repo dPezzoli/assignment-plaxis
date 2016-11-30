@@ -82,6 +82,91 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(max_b, (3.16, 1.2))
 
 
+class TestOverlappingShapesDetector(unittest.TestCase):
+    """
+    Tests for the class OverlappingShapesDetector
+    """
+
+    def setUp(self):
+        """
+        Define a fixture for the tests
+        """
+        # Get some shapes to check for collision
+        self.circle_a = shapes_2d.Circle((0, 0), 5.0)
+        self.circle_b = shapes_2d.Circle((6, 0), 1.0)
+        self.circle_c = shapes_2d.Circle((6, 0), 1.01)
+        self.circle_d = shapes_2d.Circle((0, 4), 3.0)
+        self.circle_e = shapes_2d.Circle((-9, 4), 0.1)
+        self.rectangle_a = shapes_2d.Rectangle((0, 0), 3.5, 3.9)
+        self.rectangle_b = shapes_2d.Rectangle((4, 0), 0.1, 7.0)
+        self.rectangle_c = shapes_2d.Rectangle((3, 9), 8.4, 0.2)
+        self.rectangle_d = shapes_2d.Rectangle((4, 1), 6.0, 0.1)
+        self.rectangle_e = shapes_2d.Rectangle((16, 2), 2, 1)
+
+    def test_do_these_two_shapes_overlap(self):
+        """
+        Test the possible collision cases
+        """
+        # Test intersection circles
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.circle_a,
+                                                     self.circle_b))
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.circle_a,
+                                                     self.circle_e))
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.circle_b,
+                                                     self.circle_e))
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_a,
+                                                    self.circle_c))
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_d,
+                                                    self.circle_a))
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_b,
+                                                    self.circle_c))
+
+        # Test intersection rectangles
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.rectangle_a,
+                                                     self.rectangle_b))
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.rectangle_c,
+                                                     self.rectangle_b))
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.rectangle_e,
+                                                     self.rectangle_c))
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.rectangle_a,
+                                                    self.rectangle_d))
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.rectangle_b,
+                                                    self.rectangle_d))
+
+        # Test intersection circle-rectangle
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.circle_e,
+                                                     self.rectangle_c))
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.circle_a,
+                                                     self.rectangle_e))
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.circle_c,
+                                                     self.rectangle_a))
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.circle_c,
+                                                     self.rectangle_b))
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_a,
+                                                    self.rectangle_b))
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_a,
+                                                    self.rectangle_a))
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_d,
+                                                    self.rectangle_d))
+
 if __name__ == "__main__":
     unittest.main()
 

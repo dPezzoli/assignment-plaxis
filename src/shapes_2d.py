@@ -179,9 +179,9 @@ class Rectangle(Polygon):
         elif half_width <= 0:
             raise ValueError("Please provide a positive half_width value")
         # Initialize attributes
-        self.half_width = half_width
-        self.half_height = half_height
-        self.center = center
+        self._half_width = half_width
+        self._half_height = half_height
+        self._center = center
 
     @classmethod
     def from_min_max_points(cls, min_point, max_point):
@@ -195,23 +195,35 @@ class Rectangle(Polygon):
 
     @property
     def area(self):
-        return self.half_height * self.half_width * 4
+        return self._half_height * self._half_width * 4
+
+    @property
+    def half_width(self):
+        return self._half_width
+
+    @property
+    def half_height(self):
+        return self._half_height
+
+    @property
+    def center(self):
+        return self._center
 
     def get_min_coordinates(self):
         """
         :return: 2D-Cartesian coordinates of the rectangle bounding box minimum
                  point (min 'x' and min 'y')
         """
-        return (self.center[0] - self.half_width,
-                self.center[1] - self.half_height)
+        return (self._center[0] - self._half_width,
+                self._center[1] - self._half_height)
 
     def get_max_coordinates(self):
         """
         :return: 2D-Cartesian coordinates of the rectangle bounding box maximum
                  point (min 'x' and min 'y')
         """
-        return (self.center[0] + self.half_width,
-                self.center[1] + self.half_height)
+        return (self._center[0] + self._half_width,
+                self._center[1] + self._half_height)
 
 
 class OverlappingShapesDetector:

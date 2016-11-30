@@ -65,7 +65,6 @@ class Car:
 
         if shapes_2d.OverlappingShapesDetector.do_these_two_shapes_overlap(
                 box, other_box):
-            print("Bounding boxes do intersect")
             # 2) Check all the underlying shapes.
             for i in range(len(self._shapes)):
                 for j in range(len(car.shapes)):

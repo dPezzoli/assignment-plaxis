@@ -183,6 +183,16 @@ class Rectangle(Polygon):
         self.half_height = half_height
         self.center = center
 
+    @classmethod
+    def from_min_max_points(cls, min_point, max_point):
+        """
+        Initialize from min and max points
+        """
+        half_width = (max_point[0] - min_point[0]) / 2
+        half_height = (max_point[1] - min_point[1]) / 2
+        center = (min_point[0] + half_width, min_point[1] + half_height)
+        return cls(center, half_width, half_height)
+
     @property
     def area(self):
         return self.half_height * self.half_width * 4

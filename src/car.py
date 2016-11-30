@@ -42,7 +42,7 @@ class Car:
             if shape_max_coordinates[1] > max_coordinates[1]:
                 max_coordinates[1] = shape_max_coordinates[1]
 
-        return [min_coordinates, max_coordinates]
+        return min_coordinates, max_coordinates
 
     def collides(self, car):
         """

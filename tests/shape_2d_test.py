@@ -62,6 +62,11 @@ class TestRectangle(unittest.TestCase):
         self.rectangle_a = shapes_2d.Rectangle((0, 0), 3.16, 1.2)
         self.rectangle_b = shapes_2d.Rectangle((3, 0), 1.0, 4.0)
 
+    def test_from_min_max_points(self):
+        rectangle = shapes_2d.Rectangle.from_min_max_points((-1, -1), (3, 5))
+        self.assertEqual(rectangle.get_min_coordinates(), (-1, -1))
+        self.assertEqual(rectangle.get_max_coordinates(), (3, 5))
+
     def test_area(self):
         area_a = self.rectangle_a.area
         self.assertEqual(area_a, 15.168)

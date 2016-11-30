@@ -3,7 +3,7 @@ This module provides an implementation of a car class.
 """
 
 import math
-import shapes_2d
+from src import shapes_2d
 
 
 class Car:

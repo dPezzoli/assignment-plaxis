@@ -16,6 +16,10 @@ class Car:
         self.name = name
         self._shapes = shapes
 
+    @property
+    def shapes(self):
+        return self._shapes
+
     def compute_bounding_box(self):
         """
         :return: The min and max coordinates points of this car axis aligned

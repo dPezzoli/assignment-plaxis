@@ -13,6 +13,10 @@ import math
 from abc import ABCMeta, abstractmethod, abstractproperty
 
 
+def sqr(x):
+    return x * x
+
+
 class Shape2D:
     """
     Abstract class defining a generic two-dimensional shape

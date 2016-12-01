@@ -21,6 +21,20 @@ def get_intersections(cars):
     return result
 
 
+def print_colliding_cars(cars_pairs):
+    """
+    :param cars_pairs: The list of cars pairs to be printed
+    """
+
+    if len(cars_pairs) == 0:
+        print("No car is colliding")
+    else:
+        for intersecting_pair in cars_pairs:
+            print(str(intersecting_pair[0].name) +
+                  ' overlaps ' +
+                  str(intersecting_pair[1].name))
+
+
 def make_cars(cars_specs):
     """
     Builds a set of cars as specified in the input parameter:
@@ -36,16 +50,54 @@ def make_cars(cars_specs):
 
     for car_specs in cars_specs:
         car_name = car_specs[0]
-        car_shapes_specs = car_specs[1]
         car_shapes = []
-        if car_shapes_specs[0] == "rectangle":
-            print("make a rectangle")
-            car_shapes.append(shapes_2d.Rectangle(car_shapes_specs[1][0],
-                                                  car_shapes_specs[1][1],
-                                                  car_shapes_specs[1][2]))
-        elif car_shapes_specs[0] == "circle":
-            print("make a circle")
-            car_shapes.append(shapes_2d.Circle(car_shapes_specs[1][0],
-                                               car_shapes_specs[1][1]))
+        for i in range(1, len(car_specs)):
+            shape = car_specs[i]
+            if shape[0].lower() == "rectangle":
+                car_shapes.append(shapes_2d.Rectangle(shape[1][0],
+                                                      shape[1][1],
+                                                      shape[1][2]))
+            elif shape[0].lower() == "circle":
+                car_shapes.append(shapes_2d.Circle(shape[1][0],
+                                                   shape[1][1]))
         cars.append(car.Car(car_name, car_shapes))
     return cars
+
+
+# ============================================================================
+# EXAMPLE: Here three cars are constructed from the user specifications given
+#          in the_cars_specs. Later, the collision state for these cars is
+#          checked and the possible colliding cars names are printed.
+
+# Get a bunch of cars
+the_cars_specs = [
+    ("Fiat",
+     ("rectangle", ((2, 2), 1, 1)),
+     ("rectangle", ((3, 1), 3, 1)),
+     ("circle", ((0, 0), 1)),
+     ("circle", ((5, 0), 1))),
+    ("Maserati",
+     ("rectangle", ((10, 2), 1, 1)),
+     ("rectangle", ((11, 1), 3, 1)),
+     ("circle", ((8, 0), 1)),
+     ("circle", ((13, 0), 1))),
+    ("Ferrari",
+     ("rectangle", ((13, 2), 1, 1)),
+     ("rectangle", ((14, 1), 3, 1)),
+     ("circle", ((11, 0), 1)),
+     ("circle", ((17, 0), 1))),
+    ("Lamborghini",
+     ("rectangle", ((19, 2), 1, 1)),
+     ("rectangle", ((20, 1), 3, 1)),
+     ("circle", ((17, 0), 1)),
+     ("circle", ((23, 0), 1))),
+                 ]
+
+# Make the cars
+the_cars = make_cars(the_cars_specs)
+
+# Get colliding cars
+intersecting_cars = get_intersections(the_cars)
+
+# Print colliding cars
+print_colliding_cars(intersecting_cars)

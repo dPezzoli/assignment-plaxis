@@ -13,12 +13,16 @@ class Car:
     """
 
     def __init__(self, name, shapes):
-        self.name = name
+        self._name = name
         self._shapes = shapes
 
     @property
     def shapes(self):
         return self._shapes
+
+    @property
+    def name(self):
+        return self._name
 
     def compute_bounding_box(self):
         """

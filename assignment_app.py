@@ -21,6 +21,20 @@ def get_intersections(cars):
     return result
 
 
+def print_colliding_cars(cars_pairs):
+    """
+    :param cars_pairs: The list of cars pairs to be printed
+    """
+
+    if len(cars_pairs) == 0:
+        print("No car is colliding")
+    else:
+        for intersecting_pair in cars_pairs:
+            print(str(intersecting_pair[0].name) +
+                  ' overlaps ' +
+                  str(intersecting_pair[1].name))
+
+
 def make_cars(cars_specs):
     """
     Builds a set of cars as specified in the input parameter:

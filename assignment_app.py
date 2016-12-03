@@ -48,19 +48,24 @@ def make_cars(cars_specs):
     """
     cars = []
 
-    for car_specs in cars_specs:
-        car_name = car_specs[0]
-        car_shapes = []
-        for i in range(1, len(car_specs)):
-            shape = car_specs[i]
-            if shape[0].lower() == "rectangle":
-                car_shapes.append(shapes_2d.Rectangle(shape[1][0],
-                                                      shape[1][1],
-                                                      shape[1][2]))
-            elif shape[0].lower() == "circle":
-                car_shapes.append(shapes_2d.Circle(shape[1][0],
-                                                   shape[1][1]))
-        cars.append(car.Car(car_name, car_shapes))
+    if len(cars_specs) == 0:
+        print("The given specifications do not contain data!")
+    else:
+        for car_specs in cars_specs:
+            car_name = car_specs[0]
+            car_shapes = []
+            for i in range(1, len(car_specs)):
+                shape = car_specs[i]
+                if shape[0].lower() == "rectangle":
+                    car_shapes.append(shapes_2d.Rectangle(shape[1][0],
+                                                          shape[1][1],
+                                                          shape[1][2]))
+                elif shape[0].lower() == "circle":
+                    car_shapes.append(shapes_2d.Circle(shape[1][0],
+                                                       shape[1][1]))
+                else:
+                    print("Could not determine the type of shape")
+            cars.append(car.Car(car_name, car_shapes))
     return cars
 
 

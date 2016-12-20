@@ -29,17 +29,10 @@ class Shape2D:
         pass
 
     @abstractmethod
-    def get_min_coordinates(self):
+    def get_bounding_box(self):
         """
-        :return: 2D-Cartesian coordinates of the shape bounding box minimum
-                 point (min 'x' and min 'y')
-        """
-
-    @abstractmethod
-    def get_max_coordinates(self):
-        """
-        :return: 2D-Cartesian coordinates of the shape bounding box maximum
-                 point (min 'x' and min 'y')
+        :return: the min and max coordinates points of this shape, which define
+        the axis aligned bounding box ((min_x, min_y), (max_x, max_y))
         """
 
 

@@ -34,13 +34,15 @@ class Car:
 
         for shape in self._shapes:
 
-            shape_min_coordinates = shape.get_min_coordinates()
+            shape_bounding_box = shape.get_bounding_box()
+
+            shape_min_coordinates = shape_bounding_box[0]
             if shape_min_coordinates[0] < min_coordinates[0]:
                 min_coordinates[0] = shape_min_coordinates[0]
             if shape_min_coordinates[1] < min_coordinates[1]:
                 min_coordinates[1] = shape_min_coordinates[1]
 
-            shape_max_coordinates = shape.get_max_coordinates()
+            shape_max_coordinates = shape_bounding_box[1]
             if shape_max_coordinates[0] > max_coordinates[0]:
                 max_coordinates[0] = shape_max_coordinates[0]
             if shape_max_coordinates[1] > max_coordinates[1]:

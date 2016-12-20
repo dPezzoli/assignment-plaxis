@@ -36,6 +36,53 @@ class Shape2D:
         """
 
 
+class CompositeShape(Shape2D):
+    """
+    Class defining a 2d-compound
+    """
+
+    def __init__(self, shapes):
+        """
+        :param shapes: list of 2d-shapes that within this 2d-compound
+        """
+        # Check radius positiveness
+        self._shapes = shapes
+
+    @property
+    def area(self):
+        sum_shapes_area = 0
+        for shape in self._shapes:
+            sum_shapes_area += shape.area
+
+        return sum_shapes_area
+
+    def get_bounding_box(self):
+        """
+        :return: the min and max coordinates points of this shape, which define
+        the axis aligned bounding box ((min_x, min_y), (max_x, max_y))
+        """
+        min_coordinates = [math.inf, math.inf]
+        max_coordinates = [-math.inf, -math.inf]
+
+        for shape in self._shapes:
+
+            shape_bounding_box = shape.get_bounding_box()
+
+            shape_min_coordinates = shape_bounding_box[0]
+            if shape_min_coordinates[0] < min_coordinates[0]:
+                min_coordinates[0] = shape_min_coordinates[0]
+            if shape_min_coordinates[1] < min_coordinates[1]:
+                min_coordinates[1] = shape_min_coordinates[1]
+
+            shape_max_coordinates = shape_bounding_box[1]
+            if shape_max_coordinates[0] > max_coordinates[0]:
+                max_coordinates[0] = shape_max_coordinates[0]
+            if shape_max_coordinates[1] > max_coordinates[1]:
+                max_coordinates[1] = shape_max_coordinates[1]
+
+        return min_coordinates, max_coordinates
+
+
 class NonPolygon(Shape2D):
     """
     Class defining a non-polygonal 2d shape

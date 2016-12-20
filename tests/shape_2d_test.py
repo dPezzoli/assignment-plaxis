@@ -104,14 +104,16 @@ class TestOverlappingShapesDetector(unittest.TestCase):
                                           15 * math.sin(math.pi/4)), 9.99)
         self.circle_l = shapes_2d.Circle((15 * math.sin(math.pi/4),
                                           15 * math.sin(math.pi/4)), 10.01)
+        self.circle_m = shapes_2d.Circle((20.5, 3.5), 1.0)
         self.rectangle_a = shapes_2d.Rectangle((0, 0), 3.5, 3.9)
         self.rectangle_b = shapes_2d.Rectangle((4, 0), 0.1, 7.0)
         self.rectangle_c = shapes_2d.Rectangle((16, 2), 2, 1)
         self.rectangle_d = shapes_2d.Rectangle((11, 2), 2, 1)
         self.rectangle_e = shapes_2d.Rectangle((0, 0), 3.5, 3.9)
         self.rectangle_f = shapes_2d.Rectangle((12, 2), 2, 1)
-        self.rectangle_g = shapes_2d.Rectangle((12.001, 2), 2, 1)
+        self.rectangle_g = shapes_2d.Rectangle((12.0001, 2), 2, 1)
         self.rectangle_h = shapes_2d.Rectangle((17.5, 3.5), 2, 1)
+        self.rectangle_i = shapes_2d.Rectangle((17.5, 3.5), 2.0001, 1)
 
     #
     # Tests using circles -----------------------------------------------------
@@ -271,6 +273,54 @@ class TestOverlappingShapesDetector(unittest.TestCase):
         self.assertTrue(shapes_2d.OverlappingShapesDetector.
                         do_these_two_shapes_overlap(self.rectangle_c,
                                                     self.rectangle_h))
+
+    #
+    # Tests using rectangles together with circles ----------------------------
+
+    def test_intersection_thin_rectangle_overlapping_circle(self):
+        """
+        Test do_these_two_shapes_overlap method with a thin rectangle which
+        overlaps a circle
+        """
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_a,
+                                                    self.rectangle_a))
+
+    def test_intersection_rectangle_overlapping_circle(self):
+        """
+        Test do_these_two_shapes_overlap method with a thin rectangle which
+        overlaps a circle
+        """
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_a,
+                                                    self.rectangle_b))
+
+    def test_intersection_rectangle_overlapping_large_circle(self):
+        """
+        Test do_these_two_shapes_overlap method with a thin rectangle which
+        overlaps a circle
+        """
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_l,
+                                                    self.rectangle_d))
+
+    def test_intersection_rectangle_touching_circle(self):
+        """
+        Test do_these_two_shapes_overlap method with a thin rectangle which
+        overlaps a circle
+        """
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.circle_m,
+                                                     self.rectangle_h))
+
+    def test_intersection_rectangle_slightly_overlapping_circle(self):
+        """
+        Test do_these_two_shapes_overlap method with a thin rectangle which
+        overlaps a circle
+        """
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.circle_m,
+                                                    self.rectangle_i))
 
 
 if __name__ == "__main__":

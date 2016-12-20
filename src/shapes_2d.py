@@ -44,26 +44,8 @@ class NonPolygon(Shape2D):
     __metaclass__ = ABCMeta
 
     @abstractproperty
-    def area(self):
-        pass
-
-    @abstractproperty
     def center(self):
         pass
-
-    @abstractmethod
-    def get_min_coordinates(self):
-        """
-        :return: 2D-Cartesian coordinates of the non-polygon shape bounding box
-                 minimum point (min 'x' and min 'y')
-        """
-
-    @abstractmethod
-    def get_max_coordinates(self):
-        """
-        :return: 2D-Cartesian coordinates of the non-polygon shape bounding box
-                 maximum point (min 'x' and min 'y')
-        """
 
 
 class Polygon(Shape2D):
@@ -73,24 +55,6 @@ class Polygon(Shape2D):
     """
 
     __metaclass__ = ABCMeta
-
-    @abstractproperty
-    def area(self):
-        pass
-
-    @abstractmethod
-    def get_min_coordinates(self):
-        """
-        :return: 2D-Cartesian coordinates of the polygon bounding box minimum
-                 point (min 'x' and min 'y')
-        """
-
-    @abstractmethod
-    def get_max_coordinates(self):
-        """
-        :return: 2D-Cartesian coordinates of the polygon bounding box maximum
-                 point (min 'x' and min 'y')
-        """
 
 
 class Circle(NonPolygon):

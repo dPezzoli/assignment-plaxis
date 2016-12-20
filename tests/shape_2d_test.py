@@ -104,12 +104,16 @@ class TestOverlappingShapesDetector(unittest.TestCase):
                                           15 * math.sin(math.pi/4)), 9.99)
         self.circle_l = shapes_2d.Circle((15 * math.sin(math.pi/4),
                                           15 * math.sin(math.pi/4)), 10.01)
-        # self.rectangle_a = shapes_2d.Rectangle((0, 0), 3.5, 3.9)
-        # self.rectangle_b = shapes_2d.Rectangle((4, 0), 0.1, 7.0)
-        # self.rectangle_c = shapes_2d.Rectangle((3, 9), 8.4, 0.2)
-        # self.rectangle_d = shapes_2d.Rectangle((4, 1), 6.0, 0.1)
-        # self.rectangle_e = shapes_2d.Rectangle((16, 2), 2, 1)
+        self.rectangle_a = shapes_2d.Rectangle((0, 0), 3.5, 3.9)
+        self.rectangle_b = shapes_2d.Rectangle((4, 0), 0.1, 7.0)
+        self.rectangle_c = shapes_2d.Rectangle((16, 2), 2, 1)
+        self.rectangle_d = shapes_2d.Rectangle((11, 2), 2, 1)
+        self.rectangle_e = shapes_2d.Rectangle((0, 0), 3.5, 3.9)
+        self.rectangle_f = shapes_2d.Rectangle((12, 2), 2, 1)
+        self.rectangle_g = shapes_2d.Rectangle((12.001, 2), 2, 1)
+        self.rectangle_h = shapes_2d.Rectangle((17.5, 3.5), 2, 1)
 
+    #
     # Tests using circles -----------------------------------------------------
 
     def test_intersection_perfectly_overlapping_circles(self):
@@ -198,6 +202,75 @@ class TestOverlappingShapesDetector(unittest.TestCase):
         self.assertTrue(shapes_2d.OverlappingShapesDetector.
                         do_these_two_shapes_overlap(self.circle_a,
                                                     self.circle_h))
+
+    #
+    # Tests using rectangles --------------------------------------------------
+
+    def test_intersection_perfectly_overlapping_rectangles(self):
+        """
+        Test do_these_two_shapes_overlap method with two rectangles which
+        perfectly overlap each other.
+        """
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.rectangle_a,
+                                                    self.rectangle_e))
+
+    def test_intersection_not_overlapping_rectangles(self):
+        """
+        Test do_these_two_shapes_overlap method with two rectangles which
+        overlap each other. In this case, one very thin rectangle is involved.
+        """
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.rectangle_b,
+                                                     self.rectangle_c))
+
+    def test_intersection_not_overlapping_rectangles_thin(self):
+        """
+        Test do_these_two_shapes_overlap method with two rectangles which
+        overlap each other. In this case, the rectangles are not intersecting.
+        """
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.rectangle_a,
+                                                     self.rectangle_b))
+
+    def test_intersection_not_overlapping_rectangles_offset(self):
+        """
+        Test do_these_two_shapes_overlap method with two rectangles which
+        overlap each other. In this case, one rectangle is obtained
+        offsetting the first one.
+        """
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.rectangle_b,
+                                                     self.rectangle_d))
+
+    def test_intersection_not_overlapping_rectangles_shared_edge(self):
+        """
+        Test do_these_two_shapes_overlap method with two rectangles which
+        overlap each other. In this case, one rectangle is obtained
+        offsetting the first one. The two rectangles share one edge (not
+        overlapping)
+        """
+        self.assertFalse(shapes_2d.OverlappingShapesDetector.
+                         do_these_two_shapes_overlap(self.rectangle_c,
+                                                     self.rectangle_f))
+
+    def test_intersection_slightly_overlapping_rectangles(self):
+        """
+        Test do_these_two_shapes_overlap method with two rectangles which
+        overlap each other. The rectangles are obtained by offset.
+        """
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.rectangle_c,
+                                                    self.rectangle_g))
+
+    def test_intersection_overlapping_rectangles_corner(self):
+        """
+        Test do_these_two_shapes_overlap method with two rectangles which
+        overlap each other. The rectangles overlap in one corner.
+        """
+        self.assertTrue(shapes_2d.OverlappingShapesDetector.
+                        do_these_two_shapes_overlap(self.rectangle_c,
+                                                    self.rectangle_h))
 
 
 if __name__ == "__main__":

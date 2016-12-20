@@ -86,19 +86,15 @@ class Circle(NonPolygon):
     def radius(self):
         return self._radius
 
-    def get_min_coordinates(self):
+    @abstractmethod
+    def get_bounding_box(self):
         """
-        :return: 2D-Cartesian coordinates of the circle bounding box minimum
-                 point (min 'x' and min 'y')
+        :return: the min and max coordinates points of this shape, which define
+        the axis aligned bounding box ((min_x, min_y), (max_x, max_y))
         """
-        return self._center[0] - self._radius, self._center[1] - self._radius
-
-    def get_max_coordinates(self):
-        """
-        :return: 2D-Cartesian coordinates of the circle bounding box maximum
-                 point (min 'x' and min 'y')
-        """
-        return self._center[0] + self._radius, self._center[1] + self._radius
+        return \
+            ((self._center[0] - self._radius, self._center[1] - self._radius),
+             (self._center[0] + self._radius, self._center[1] + self._radius))
 
     def evenly_distribute_points_along_circumference(self, number_of_points):
         """
@@ -166,21 +162,16 @@ class Rectangle(Polygon):
     def center(self):
         return self._center
 
-    def get_min_coordinates(self):
+    @abstractmethod
+    def get_bounding_box(self):
         """
-        :return: 2D-Cartesian coordinates of the rectangle bounding box minimum
-                 point (min 'x' and min 'y')
+        :return: the min and max coordinates points of this shape, which define
+        the axis aligned bounding box ((min_x, min_y), (max_x, max_y))
         """
-        return (self._center[0] - self._half_width,
-                self._center[1] - self._half_height)
-
-    def get_max_coordinates(self):
-        """
-        :return: 2D-Cartesian coordinates of the rectangle bounding box maximum
-                 point (min 'x' and min 'y')
-        """
-        return (self._center[0] + self._half_width,
-                self._center[1] + self._half_height)
+        return ((self._center[0] - self._half_width,
+                 self._center[1] - self._half_height),
+                (self._center[0] + self._half_width,
+                 self._center[1] + self._half_height))
 
 
 class OverlappingShapesDetector:

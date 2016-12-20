@@ -86,7 +86,6 @@ class Circle(NonPolygon):
     def radius(self):
         return self._radius
 
-    @abstractmethod
     def get_bounding_box(self):
         """
         :return: the min and max coordinates points of this shape, which define
@@ -162,7 +161,6 @@ class Rectangle(Polygon):
     def center(self):
         return self._center
 
-    @abstractmethod
     def get_bounding_box(self):
         """
         :return: the min and max coordinates points of this shape, which define

@@ -32,13 +32,9 @@ class TestCircle(unittest.TestCase):
         center_d = self.circle_d.center
         self.assertEqual(center_d, (0, -2))
 
-    def test_get_min_coordinates(self):
-        min_b = self.circle_b.get_min_coordinates()
-        self.assertEqual(min_b, (1.2, -1.8))
-
-    def test_get_max_coordinates(self):
-        max_b = self.circle_b.get_max_coordinates()
-        self.assertEqual(max_b, (4.8, 1.8))
+    def get_bounding_box(self):
+        bounding_box_b = self.circle_b.get_bounding_box
+        self.assertEqual(bounding_box_b, ((1.2, -1.8), (4.8, 1.8)))
 
     def test_evenly_distribute_points_along_circumference(self):
         points = self.circle_c.evenly_distribute_points_along_circumference(12)
@@ -64,8 +60,9 @@ class TestRectangle(unittest.TestCase):
 
     def test_from_min_max_points(self):
         rectangle = shapes_2d.Rectangle.from_min_max_points((-1, -1), (3, 5))
-        self.assertEqual(rectangle.get_min_coordinates(), (-1, -1))
-        self.assertEqual(rectangle.get_max_coordinates(), (3, 5))
+        rectangle_bounding_box = rectangle.get_bounding_box()
+        self.assertEqual(rectangle_bounding_box[0], (-1, -1))
+        self.assertEqual(rectangle_bounding_box[1], (3, 5))
 
     def test_area(self):
         area_a = self.rectangle_a.area
@@ -78,13 +75,9 @@ class TestRectangle(unittest.TestCase):
         center_b = self.rectangle_b.center
         self.assertEqual(center_b, (3, 0))
 
-    def test_get_min_coordinates(self):
-        min_b = self.rectangle_a.get_min_coordinates()
-        self.assertEqual(min_b, (-3.16, -1.2))
-
-    def test_get_max_coordinates(self):
-        max_b = self.rectangle_a.get_max_coordinates()
-        self.assertEqual(max_b, (3.16, 1.2))
+    def get_bounding_box(self):
+        bounding_box_a = self.rectangle_a.get_bounding_box()
+        self.assertEqual(bounding_box_a, ((-3.16, -1.2), (3.16, 1.2)))
 
 
 class TestOverlappingShapesDetector(unittest.TestCase):

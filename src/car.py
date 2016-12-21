@@ -32,8 +32,11 @@ class Car:
         # 1) Check on bounding boxes: if they don't overlap, the two cars don't
         #    collide.
 
-        bounding_box = self.compute_bounding_box()
-        other_bounding_box = car.compute_bounding_box()
+        shapes_compound = shapes_2d.CompositeShape(self.shapes)
+        bounding_box = shapes_compound.get_bounding_box()
+
+        other_shapes_compound = shapes_2d.CompositeShape(car.shapes)
+        other_bounding_box = other_shapes_compound.get_bounding_box()
 
         # Make two rectangles to check intersection.
         box = shapes_2d.Rectangle.from_min_max_points(bounding_box[0],
@@ -42,12 +45,12 @@ class Car:
                                                         other_bounding_box[0],
                                                         other_bounding_box[1])
 
-        if shapes_2d.OverlappingShapesDetector.do_these_two_shapes_overlap(
-                box, other_box):
+        if overlaps_detection.OverlappingShapesDetector.\
+                do_these_two_shapes_overlap(box, other_box):
             # 2) Check all the underlying shapes.
             for i in range(len(self._shapes)):
                 for j in range(len(car.shapes)):
-                    if shapes_2d.OverlappingShapesDetector. \
+                    if overlaps_detection.OverlappingShapesDetector. \
                             do_these_two_shapes_overlap(self._shapes[i],
                                                         car.shapes[j]):
                         return True

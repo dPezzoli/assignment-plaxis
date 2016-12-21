@@ -56,6 +56,10 @@ class CompositeShape(Shape2D):
 
         return sum_shapes_area
 
+    @property
+    def shapes(self):
+        return self._shapes
+
     def get_bounding_box(self):
         """
         :return: the min and max coordinates points of this shape, which define

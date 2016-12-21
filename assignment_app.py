@@ -4,7 +4,7 @@ Note: the cars are currently approximated by rectangles or circles.
 """
 
 from src import car
-from src import shapes_2d
+from src import shapes_2d, overlaps_detection
 
 
 def get_intersections(cars):
@@ -16,7 +16,8 @@ def get_intersections(cars):
 
     for i in range(len(cars)):
         for j in range(len(cars)):
-            if i < j and cars[i].collides(cars[j]):
+            if i < j and overlaps_detection.do_these_cars_collide(cars[i],
+                                                                  cars[j]):
                 result.append((cars[i], cars[j]))
     return result
 

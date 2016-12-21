@@ -1,10 +1,43 @@
 """
-This module provides utilities to detect overlapping shapes
+This module provides utilities to detect overlapping shapes. Here, a function
+to assess the intersection of two Car objects is also implemented
 """
 
 from src import shapes_2d
 
-# def do_these_car_overlap(fi)
+
+def do_these_cars_collide(first_car, second_car):
+    """
+    :param car: a second car against which the collision state is
+                determined
+    :return: True if self collides with the given car; False otherwise
+    """
+    # 1) Check on bounding boxes: if they don't overlap, the two cars don't
+    #    collide.
+
+    shapes_compound = shapes_2d.CompositeShape(first_car.shapes)
+    bounding_box = shapes_compound.get_bounding_box()
+
+    other_shapes_compound = shapes_2d.CompositeShape(second_car.shapes)
+    other_bounding_box = other_shapes_compound.get_bounding_box()
+
+    # Make two rectangles to check intersection.
+    box = shapes_2d.Rectangle.from_min_max_points(bounding_box[0],
+                                                  bounding_box[1])
+    other_box = shapes_2d.Rectangle.from_min_max_points(
+        other_bounding_box[0],
+        other_bounding_box[1])
+
+    if OverlappingShapesDetector.do_these_two_shapes_overlap(box, other_box):
+        # 2) Check all the underlying shapes.
+        for i in range(len(first_car.shapes)):
+            for j in range(len(second_car.shapes)):
+                if OverlappingShapesDetector. \
+                        do_these_two_shapes_overlap(first_car.shapes[i],
+                                                    second_car.shapes[j]):
+                    return True
+    return False
+
 
 class OverlappingShapesDetector:
     """

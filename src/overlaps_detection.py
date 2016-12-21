@@ -8,8 +8,10 @@ from src import shapes_2d
 
 def do_these_cars_collide(first_car, second_car):
     """
-    :param car: a second car against which the collision state is
-                determined
+    :param first_car: the first car against which the collision state is
+                      determined
+    :param second_car: the second car against which the collision state is
+                       determined
     :return: True if self collides with the given car; False otherwise
     """
     # 1) Check on bounding boxes: if they don't overlap, the two cars don't

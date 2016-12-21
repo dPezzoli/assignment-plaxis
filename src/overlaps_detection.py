@@ -100,18 +100,60 @@ class OverlappingShapesDetector:
         """
         :return: True if the two given rectangles overlap
         """
-        max_length_width = (first_rectangle.half_width +
-                            second_rectangle.half_width)
-        max_length_height = (first_rectangle.half_height +
-                             second_rectangle.half_height)
+        # max_length_width = (first_rectangle.half_width +
+        #                     second_rectangle.half_width)
+        # max_length_height = (first_rectangle.half_height +
+        #                      second_rectangle.half_height)
+        #
+        # if (abs(first_rectangle.center[0] - second_rectangle.center[0]) <
+        #         max_length_width and
+        #         abs(first_rectangle.center[1] - second_rectangle.center[1]) <
+        #         max_length_height):
+        #     return True
+        #
+        # return False
 
-        if (abs(first_rectangle.center[0] - second_rectangle.center[0]) <
-                max_length_width and
-                abs(first_rectangle.center[1] - second_rectangle.center[1]) <
-                max_length_height):
-            return True
+        vertices_first_rectangle = [
+             ((first_rectangle.center[0] - first_rectangle.half_width),
+              (first_rectangle.center[1] - first_rectangle.half_height)),
+             ((first_rectangle.center[0] - first_rectangle.half_width),
+              (first_rectangle.center[1] + first_rectangle.half_height)),
+             ((first_rectangle.center[0] + first_rectangle.half_width),
+              (first_rectangle.center[1] + first_rectangle.half_height)),
+             ((first_rectangle.center[0] + first_rectangle.half_width),
+              (first_rectangle.center[1] - first_rectangle.half_height))
+             ]
 
-        return False
+        vertices_second_rectangle = [
+             ((second_rectangle.center[0] - second_rectangle.half_width),
+              (second_rectangle.center[1] - second_rectangle.half_height)),
+             ((second_rectangle.center[0] - second_rectangle.half_width),
+              (second_rectangle.center[1] + second_rectangle.half_height)),
+             ((second_rectangle.center[0] + second_rectangle.half_width),
+              (second_rectangle.center[1] + second_rectangle.half_height)),
+             ((second_rectangle.center[0] + second_rectangle.half_width),
+              (second_rectangle.center[1] - second_rectangle.half_height))
+             ]
+
+        segments_first_rectangle = [
+             (vertices_first_rectangle[0], vertices_first_rectangle[1]),
+             (vertices_first_rectangle[1], vertices_first_rectangle[2]),
+             (vertices_first_rectangle[2], vertices_first_rectangle[3]),
+             (vertices_first_rectangle[3], vertices_first_rectangle[0])
+             ]
+
+        segments_second_rectangle = [
+             (vertices_second_rectangle[0], vertices_second_rectangle[1]),
+             (vertices_second_rectangle[1], vertices_second_rectangle[2]),
+             (vertices_second_rectangle[2], vertices_second_rectangle[3]),
+             (vertices_second_rectangle[3], vertices_second_rectangle[0])
+             ]
+
+        for segment_first_rectangle in segments_first_rectangle:
+            for segment_second_rectangle in segments_second_rectangle:
+                if(OverlappingShapesDetector.__do_these_segments_intersect(
+                        segment_first_rectangle, segment_second_rectangle)):
+                    return True
 
     @staticmethod
     def __do_these_two_circles_overlap(first_circle, second_circle):
@@ -158,3 +200,42 @@ class OverlappingShapesDetector:
                 return True
 
         return False
+
+    @staticmethod
+    def __do_these_segments_intersect(first_segment, second_segment):
+        """
+        This implementation strictly follows what is described here:
+        http://bryceboe.com/2006/10/23/line-segment-intersection-algorithm/
+        :return: True if the two given segments intersect. This check is easy
+                 and elegant but does not consider two collinear segments as
+                 possible colliding entities. However, since here segments are
+                 boundaries of 2d-shapes, this would not compromise the
+                 overlapping shapes test.
+        """
+
+        a = first_segment[0]
+        b = first_segment[1]
+        c = second_segment[0]
+        d = second_segment[1]
+
+        return ((OverlappingShapesDetector.
+                __are_in_counterclockwise_order(a, c, d) !=
+                OverlappingShapesDetector.
+                __are_in_counterclockwise_order(b, d, c))
+                and
+                (OverlappingShapesDetector.
+                __are_in_counterclockwise_order(a, b, c) !=
+                 OverlappingShapesDetector.
+                __are_in_counterclockwise_order(a, b, d)))
+
+    @staticmethod
+    def __are_in_counterclockwise_order(a, b, c):
+        """
+        :return: True if the three given vertices are listed in a
+                 counterclockwise order (think at a, b, c as vertices of a
+                 triangle in the 2d plane).
+        """
+
+        # If the slope of the line 'ab' is less than the slope of the line 'ac'
+        # then the three points are listed in a counterclockwise order.
+        return (c[1] - a[1]) * (b[0] - a[0]) > (b[1] - a[1]) * (c[0] - a[0])

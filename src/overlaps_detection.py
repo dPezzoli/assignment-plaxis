@@ -71,36 +71,6 @@ class OverlappingShapesDetector:
                                                                 second_shape))
 
     @staticmethod
-    def __do_these_two_composite_shapes_overlap(first_compound,
-                                                second_compound):
-        """
-        :return: True if the two given composite shapes overlap
-        """
-        # 1) Check on bounding boxes: if they don't overlap, the two cars don't
-        #    collide.
-
-        bounding_box = first_compound.get_bounding_box()
-        other_bounding_box = second_compound.get_bounding_box()
-
-        # Make two rectangles to check intersection.
-        box = shapes_2d.Rectangle.from_min_max_points(bounding_box[0],
-                                                      bounding_box[1])
-        other_box = shapes_2d.Rectangle.from_min_max_points(
-            other_bounding_box[0],
-            other_bounding_box[1])
-
-        if OverlappingShapesDetector.do_these_two_shapes_overlap(box,
-                                                                 other_box):
-            # 2) Check all the underlying shapes.
-            for i in range(len(first_compound.shapes)):
-                for j in range(len(second_compound.shapes)):
-                    if OverlappingShapesDetector.do_these_two_shapes_overlap(
-                            first_compound.shapes[i],
-                            second_compound.shapes[j]):
-                        return True
-        return False
-
-    @staticmethod
     def __do_these_two_rectangles_overlap(first_rectangle, second_rectangle):
         """
         :return: True if the two given rectangles overlap
